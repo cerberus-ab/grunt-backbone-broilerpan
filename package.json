@@ -1,8 +1,8 @@
 {
   "private": true,
   "name": "grunt-backbone-broilerpan",
-  "version": "0.0.1",
-  "description": "Simple Broiler pan for Grunt/Backbone applications",
+  "version": "0.1.0",
+  "description": "Simple Broilerpan for Grunt/Backbone applications.",
   "licenses": {
     "type": "MIT",
     "url": "http://www.opensource.org/licenses/mit-license.php"
