@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Grunt/Backbone Broilerpan</title>
+    <link rel="icon" type="image/png" href="img/favicon.png">
+    <link rel="shortcut icon" type="image/png" href="img/favicon.png">
+    <!-- Ubuntu font from google apis
+    <link href="//fonts.googleapis.com/css?family=Ubuntu:300,400,500,700&amp;subset=latin,cyrillic" rel="stylesheet" type="text/css">
+    -->
+    <!-- @if NODE_ENV === 'development' -->
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <!-- @endif -->
+    <!-- @if NODE_ENV === 'production' -->
+    <link rel="stylesheet" type="text/css" href="css/index.min.css">
+    <!-- @endif -->
+</head>
+<body>
+    <div class="app">
+        <!-- Application backbone -->
+    </div>
+
+    <!-- @if NODE_ENV === 'development' -->
+    <script data-main="index" src="../../node_modules/requirejs-browser/require.js"></script>
+    <script>
+        <!-- @include ../../../grunt/require.conf.js -->
+    </script>
+    <!-- @endif -->
+    <!-- @if NODE_ENV === 'production' -->
+    <script data-main="js/index.min.js" src="js/lib/require.min.js"></script>
+    <script>
+        <!-- @include ../../../grunt/require.conf-prod.js -->
+    </script>
+    <!-- @endif -->
+</body>
+</html>

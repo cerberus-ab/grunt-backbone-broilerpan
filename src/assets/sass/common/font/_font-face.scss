@@ -1,0 +1,12 @@
+@font-face {
+  $path: '../fonts/';
+
+  font-family: 'Ledger';
+  src: url('#{$path}ledger-regular.eot');
+  src: url('#{$path}ledger-regular.eot?#iefix') format('embedded-opentype'),
+       url('#{$path}ledger-regular.woff') format('woff'),
+       url('#{$path}ledger-regular.ttf') format('truetype');
+
+  font-weight: normal;
+  font-style: normal;
+}

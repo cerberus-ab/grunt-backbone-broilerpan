@@ -1,0 +1,16 @@
+# common
+.DS_Store
+.idea
+.sass-cache
+node_modules
+
+# sources
+src/assets/*.html
+src/assets/css
+src/assets/sass/components/icon/font-awesome
+src/assets/fonts/fontawesome-webfont.*
+src/assets/fonts/FontAwesome.*
+
+# targets
+build
+
