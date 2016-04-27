@@ -5,7 +5,10 @@
 module.exports = function(grunt) {
     'use strict';
 
-    var _target = 'build';
+    var _target = 'build',
+        _port = 8008,
+        _index = '/index.html';
+
 
     require('time-grunt')(grunt);
 
@@ -19,7 +22,8 @@ module.exports = function(grunt) {
             'grunt-gitinfo',
             'grunt-concurrent',
             'grunt-extend',
-            'grunt-web-server'
+            'grunt-web-server',
+            'grunt-open'
         ]
     });
 
@@ -202,18 +206,27 @@ module.exports = function(grunt) {
         options: {
             logConcurrentOutput: true
         },
-        dev: ['watch:css', 'watch:index']
+        dev: ['watch:css', 'watch:index'],
+        process: ['web_server', 'open:dev', 'watch:css', 'watch:index']
     });
 
     // web server config
     grunt.config('web_server', {
         options: {
             cors: true,
-            port: 8008,
+            port: _port,
             nevercache: true,
             logRequests: true
         },
         foo: 'bar'
+    });
+
+    // open browser config
+    grunt.config('open', {
+        dev : {
+            path: 'http://localhost:' + _port + '/src/assets' + _index,
+            app: 'Google Chrome'
+        }
     });
 
     /**
@@ -222,14 +235,6 @@ module.exports = function(grunt) {
      */
     grunt.registerTask('default', [
         'jshint'
-    ]);
-
-    /**
-     * Watchers for development
-     *
-     */
-    grunt.registerTask('keeper', [
-        'concurrent:dev'
     ]);
 
     /**
@@ -243,6 +248,15 @@ module.exports = function(grunt) {
         'copy:font-awesome',
         'jshint',
         'sass'
+    ]);
+
+    /**
+     * Process of development
+     *
+     */
+    grunt.registerTask('start', [
+        'development',
+        'concurrent:process'
     ]);
 
     /**

@@ -1,14 +1,13 @@
 {
   "private": true,
   "name": "grunt-backbone-broilerpan",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Simple Broilerpan for Grunt/Backbone applications.",
   "licenses": {
     "type": "MIT",
     "url": "http://www.opensource.org/licenses/mit-license.php"
   },
   "author": "Antony Belov <cerberus.ab@mail.ru>",
-
   "dependencies": {
     "backbone": "^1.2.3",
     "jquery": "^2.2.0",
@@ -34,6 +33,7 @@
     "grunt-env": "^0.4.4",
     "grunt-extend": "^0.4.2",
     "grunt-gitinfo": "^0.1.7",
+    "grunt-open": "^0.2.3",
     "grunt-preprocess": "^5.1.0",
     "grunt-sass": "^1.1.0",
     "grunt-web-server": "^1.2.3",

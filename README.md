@@ -4,7 +4,7 @@ Simple Broilerpan for Grunt/Backbone applications.
 
 ### Version
 
-0.1.0
+0.1.1
 
 ### Contains
 
@@ -13,7 +13,6 @@ Simple Broilerpan for Grunt/Backbone applications.
 * Lodash 4.5.0
 * Require 2.1.9
 * Moment 2.11.2
-
 * Font-awesome: 4.5.0
 * Ledger font-face
 
@@ -28,7 +27,7 @@ $ npm install
 
 ```sh
 $ grunt development
-$ grunt keeper
+$ grunt start
 $ grunt production
 ```
 
