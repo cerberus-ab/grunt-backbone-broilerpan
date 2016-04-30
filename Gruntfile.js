@@ -5,12 +5,19 @@
 module.exports = function(grunt) {
     'use strict';
 
-    var _target = 'build',
-        _port = 8008,
-        _index = '/index.html';
-
-
     require('time-grunt')(grunt);
+
+    // grunt default options
+    var options = {
+        build: {
+            target: grunt.option('target') || 'build'
+        },
+        local: {
+            host: 'http://localhost',
+            port: grunt.option('port') || 8000,
+            index: '/index.html'
+        }
+    };
 
     // load npm tasks
     require('load-grunt-tasks')(grunt, {
@@ -49,7 +56,7 @@ module.exports = function(grunt) {
             'src/assets/fonts/FontAwesome.*'
         ],
         prod: [
-            _target
+            options.build.target
         ]
     });
 
@@ -64,7 +71,7 @@ module.exports = function(grunt) {
         },
         prod: {
             src: ['src/assets/index/*.html'],
-            dest: _target + '/assets',
+            dest: options.build.target + '/assets',
             ext: '.html',
             expand: true,
             flatten: true
@@ -111,22 +118,28 @@ module.exports = function(grunt) {
         index: {
             options: {
                 name: 'index',
-                out: _target + '/assets/js/index.min.js'
+                out: options.build.target + '/assets/js/index.min.js'
             }
         }
     });
 
     // uglify task
-    grunt.config('uglify', {
-        options: {
-            mangle: false
-        },
-        prod: {
-            files: {
-                'build/assets/js/lib/require.min.js': ['node_modules/requirejs-browser/require.js']
+    grunt.config('uglify', function() {
+        var config = {
+            options: {
+                mangle: false
+            },
+            prod: {
+                files: {}
             }
-        }
-    });
+        };
+
+        config.prod.files[options.build.target + '/assets/js/lib/require.min.js'] = [
+            'node_modules/requirejs-browser/require.js'
+        ];
+
+        return config;
+    }());
 
     // copy task
     grunt.config('copy', {
@@ -148,7 +161,7 @@ module.exports = function(grunt) {
                 expand: true,
                 flatten: true,
                 src: ['src/assets/fonts/*'],
-                dest: _target + '/assets/fonts/'
+                dest: options.build.target + '/assets/fonts/'
             }]
         }
     });
@@ -164,7 +177,7 @@ module.exports = function(grunt) {
                 expand: true,
                 cwd: 'src/assets/css',
                 src: ['*.css'],
-                dest: _target + '/assets/css',
+                dest: options.build.target + '/assets/css',
                 ext: '.min.css'
             }]
         }
@@ -180,7 +193,7 @@ module.exports = function(grunt) {
                 expand: true,
                 cwd: 'src/assets/img',
                 src: ['**/*.{png,jpg,gif,svg,ico}'],
-                dest: _target + '/assets/img'
+                dest: options.build.target + '/assets/img'
             }]
         }
     });
@@ -214,7 +227,7 @@ module.exports = function(grunt) {
     grunt.config('web_server', {
         options: {
             cors: true,
-            port: _port,
+            port: options.local.port,
             nevercache: true,
             logRequests: true
         },
@@ -224,7 +237,7 @@ module.exports = function(grunt) {
     // open browser config
     grunt.config('open', {
         dev : {
-            path: 'http://localhost:' + _port + '/src/assets' + _index,
+            path: options.local.host + ':' + options.local.port + '/src/assets' + options.local.index,
             app: 'Google Chrome'
         }
     });
@@ -254,27 +267,43 @@ module.exports = function(grunt) {
      * Process of development
      *
      */
-    grunt.registerTask('start', [
-        'development',
-        'concurrent:process'
-    ]);
+    grunt.registerTask('start', function() {
+        // check build target
+        if (options.local.port <= 0 || options.local.port > 65535) {
+            grunt.fail.fatal(new TypeError('\"' + options.local.port + '\" is invalid port'));
+        }
+
+        // run tasks
+        grunt.task.run([
+            'development',
+            'concurrent:process'
+        ]);
+    });
 
     /**
      * Build production
      *
      */
-    grunt.registerTask('production', [
-        'env:prod',
-        'clean:prod',
-        'preprocess:prod',
-        'copy:font-awesome',
-        'copy:prod',
-        'jshint',
-        'requirejs',
-        'sass',
-        'uglify',
-        'cssmin',
-        'imagemin'
-    ]);
+    grunt.registerTask('production', function() {
+        // check build target
+        if (/^\.?\/?(src)?$/.test(options.build.target)) {
+            grunt.fail.fatal(new TypeError('\"' + options.build.target + '\" is forbidden build target directory'));
+        }
+
+        // run tasks
+        grunt.task.run([
+            'env:prod',
+            'clean:prod',
+            'preprocess:prod',
+            'copy:font-awesome',
+            'copy:prod',
+            'jshint',
+            'requirejs',
+            'sass',
+            'uglify',
+            'cssmin',
+            'imagemin'
+        ])
+    });
 
 };

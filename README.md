@@ -4,7 +4,7 @@ Simple Broilerpan for Grunt/Backbone applications.
 
 ### Version
 
-0.1.1
+0.1.2
 
 ### Contains
 
@@ -27,8 +27,8 @@ $ npm install
 
 ```sh
 $ grunt development
-$ grunt start
-$ grunt production
+$ grunt start [--port]
+$ grunt production [--target]
 ```
 
 
